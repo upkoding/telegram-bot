@@ -1,8 +1,8 @@
 import * as functions from "firebase-functions";
 import * as express from "express";
 import * as TelegramBot from "node-telegram-bot-api";
-import youtube from "./youtube.handler";
-import telegram from "./telegram.handler";
+import youtube from "./youtube";
+import telegram from "./telegram";
 
 // runtime config
 const config = functions.config();
