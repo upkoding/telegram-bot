@@ -1,3 +1,5 @@
+process.env.NTBA_FIX_319 = "1"; //https://github.com/yagop/node-telegram-bot-api/issues/540
+
 import * as functions from "firebase-functions";
 import * as express from "express";
 import * as TelegramBot from "node-telegram-bot-api";

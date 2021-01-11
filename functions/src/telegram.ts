@@ -16,9 +16,34 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
     .then(() => console.log("webhook registered"))
     .catch((err) => console.log("failed registering webhook: " + err.message));
 
-  // Message handlers
+  // -- Admin command handlers --
+  // Return user info (useful to get user's numeric Telegram ID)
+  bot.onText(/\/probe_me/, async (msg: TelegramBot.Message) => {
+    // only bot admin can call this
+    if (msg.chat.username === config.telegram.admin_username) {
+      await bot.sendMessage(msg.chat.id, JSON.stringify(msg.chat));
+    }
+  });
+
+  // Return group info (useful to get group's numeric Telegram ID)
+  bot.onText(/\/probe_group/, async (msg: TelegramBot.Message) => {
+    // only bot admin can call this
+    if (msg.from?.id === parseInt(config.telegram.admin_id)) {
+      // info about group sent to the bot admin
+      await bot.sendMessage(config.telegram.admin_id, JSON.stringify(msg.chat));
+    }
+  });
+
+  // -- Message handlers --
+  bot.onText(/\/start/, async (msg: TelegramBot.Message) => {
+    await bot.sendMessage(
+      msg.chat.id,
+      `Halo kaka ${msg.from?.first_name}, UpKodingBot lagi belajar, saat ini belum bisa apa-apa :)`
+    );
+  });
+
   bot.on("message", async (msg: TelegramBot.Message) => {
-    await bot.sendMessage(msg.chat.id, "I'm alive!, your message: " + msg.text);
+    await bot.sendMessage(config.telegram.admin_id, JSON.stringify(msg));
   });
 
   // webhook route
