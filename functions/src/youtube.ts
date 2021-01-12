@@ -89,7 +89,7 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
           const saved = await saveVideo(video);
           if (saved) {
             await bot.sendMessage(
-              config.telegram.admin_id,
+              config.telegram.group_id,
               `Halo koders, cekidot video terbaru ya → *${video.title}* (${video.link})`,
               { parse_mode: "Markdown" }
             );
