@@ -5,7 +5,7 @@ import * as TelegramBot from "node-telegram-bot-api";
 const router = express.Router();
 
 /**
- * Telegram bot middleware
+ * Telegram bot webhook handler
  * @param bot <TelegramBot>
  * @param config <functions.config.Config>
  */
