@@ -38,13 +38,13 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
   bot.onText(/\/start/, async (msg: TelegramBot.Message) => {
     await bot.sendMessage(
       msg.chat.id,
-      `Halo kaka ${msg.from?.first_name}, UpKodingBot lagi belajar, saat ini belum bisa apa-apa :)`
+      `Halo kak ${msg.from?.first_name}, UpKodingBot masih di bengkel: https://github.com/upkoding/telegram-bot`
     );
   });
 
-  bot.on("message", async (msg: TelegramBot.Message) => {
-    await bot.sendMessage(config.telegram.admin_id, JSON.stringify(msg));
-  });
+  // bot.on("message", async (msg: TelegramBot.Message) => {
+  //   await bot.sendMessage(config.telegram.admin_id, JSON.stringify(msg));
+  // });
 
   // webhook route
   router.post(
