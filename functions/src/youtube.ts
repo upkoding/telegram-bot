@@ -81,10 +81,13 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
       if (feed.items.length > 0) {
         const video = feed.items[0];
         const videoId = video["yt:videoId"];
-        const shared = await alreadyShared(videoId);
 
-        // only share to group if never shared previously
-        if (!shared) {
+        // isNew: published less than or equal 60 minutes ago
+        const minuteSincePublished = (Date.now() - Date.parse(video.pubDate!!)) / (1000 * 60)
+        const isNew = minuteSincePublished <= 60
+
+        // only share to group if its new AND never shared
+        if (isNew && !(await alreadyShared(videoId))) {
           // save before sharing
           const saved = await saveVideo(video);
           if (saved) {
