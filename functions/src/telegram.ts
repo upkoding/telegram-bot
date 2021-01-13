@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as functions from "firebase-functions";
 import * as TelegramBot from "node-telegram-bot-api";
+import { getMessage } from "./resources/channels"
 
 const router = express.Router();
 
@@ -39,6 +40,12 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
     await bot.sendMessage(
       msg.chat.id,
       `Halo kak ${msg.from?.first_name}, UpKodingBot masih di bengkel: https://github.com/upkoding/telegram-bot`
+    );
+  });
+
+  bot.onText(/\/channels/, async (msg: TelegramBot.Message) => {
+    await bot.sendMessage(
+      msg.chat.id, getMessage(), { parse_mode: 'Markdown' }
     );
   });
 
