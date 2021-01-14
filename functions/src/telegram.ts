@@ -47,6 +47,7 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
   bot.onText(/\/channels/, async (msg: TelegramBot.Message) => {
     await bot.sendMessage(msg.chat.id, ytChannelsMessage(), {
       parse_mode: "Markdown",
+      disable_web_page_preview: true,
     });
   });
 
@@ -54,6 +55,7 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
     const text = await latestVideosMessage();
     await bot.sendMessage(msg.chat.id, text, {
       parse_mode: "Markdown",
+      disable_web_page_preview: true,
     });
   });
 
@@ -61,6 +63,7 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
     const text = await playlistMessage();
     await bot.sendMessage(msg.chat.id, text, {
       parse_mode: "Markdown",
+      disable_web_page_preview: true,
     });
   });
 
