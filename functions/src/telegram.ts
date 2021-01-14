@@ -1,7 +1,8 @@
 import * as express from "express";
 import * as functions from "firebase-functions";
 import * as TelegramBot from "node-telegram-bot-api";
-import { getMessage } from "./resources/channels"
+import { ytChannelsMessage } from "./resources/yt_channels";
+import { latestVideosMessage, playlistMessage } from "./resources/my_channel";
 
 const router = express.Router();
 
@@ -44,9 +45,23 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
   });
 
   bot.onText(/\/channels/, async (msg: TelegramBot.Message) => {
-    await bot.sendMessage(
-      msg.chat.id, getMessage(), { parse_mode: 'Markdown' }
-    );
+    await bot.sendMessage(msg.chat.id, ytChannelsMessage(), {
+      parse_mode: "Markdown",
+    });
+  });
+
+  bot.onText(/\/videos/, async (msg: TelegramBot.Message) => {
+    const text = await latestVideosMessage();
+    await bot.sendMessage(msg.chat.id, text, {
+      parse_mode: "Markdown",
+    });
+  });
+
+  bot.onText(/\/playlists/, async (msg: TelegramBot.Message) => {
+    const text = await playlistMessage();
+    await bot.sendMessage(msg.chat.id, text, {
+      parse_mode: "Markdown",
+    });
   });
 
   // bot.on("message", async (msg: TelegramBot.Message) => {
