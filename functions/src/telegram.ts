@@ -38,10 +38,39 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
 
   // -- Message handlers --
   bot.onText(/\/start/, async (msg: TelegramBot.Message) => {
-    await bot.sendMessage(
-      msg.chat.id,
-      `Halo kak ${msg.from?.first_name}, UpKodingBot masih di bengkel: https://github.com/upkoding/telegram-bot`
-    );
+    const text = `
+Halo kak ${msg.from?.first_name},
+
+Perkenalkan saya [UpKodingBot](https://github.com/upkoding/telegram-bot), lagi belajar pemrograman juga lho.
+Saat ini belum punya banyak skill tapi sudah bisa beberapa command berikut ini:
+
+/channels - Daftar channel Youtube belajar programming
+/videos - Daftar video terbaru dari Bli Eka Putra
+/playlists - Daftar playlist yang ada di channel UpKoding
+/tentang - Tentang UpKodingBot
+
+Udah baru segitu hehe, mau bikin saya tambah pintar? kakak bisa ngajarin [disini](https://github.com/upkoding/telegram-bot)`;
+    await bot.sendMessage(msg.chat.id, text, {
+      parse_mode: "Markdown",
+      disable_web_page_preview: true,
+    });
+  });
+
+  bot.onText(/\/tentang/, async (msg: TelegramBot.Message) => {
+    const text = `
+Halo kak ${msg.from?.first_name}, penasaran sama saya ya? 😀
+
+Saya cuma kasi contoh apa yang seorang programmer bisa lakukan, seperti bli Eka yang menciptakan saya. Dengan keahlian programming kita bisa membuat Telegram bot, aplikasi, website pkoknya banyak kak.
+
+Jadi tetap semangat ya, belajar programming memang tidak mudah tapi saya yakin kak ${msg.from?.first_name} pasti bisa asalkan tekun dan tidak pernah menyerah.
+
+O iya, saya dibuat pakai [NodeJS](https://nodejs.org) dan di-coding dengan [Typescript](https://www.typescriptlang.org) lho kak, trus saya jalan di [Firebase](https://firebase.google.com) dan ingatan saya ada di [Firestore](https://firebase.google.com/docs/firestore).
+
+Kakak juga bisa bantu ngajarin saya skill baru atau benerin kalau saya ada salah, [disini kak](https://github.com/upkoding/telegram-bot).`;
+    await bot.sendMessage(msg.chat.id, text, {
+      parse_mode: "Markdown",
+      disable_web_page_preview: true,
+    });
   });
 
   bot.onText(/\/channels/, async (msg: TelegramBot.Message) => {

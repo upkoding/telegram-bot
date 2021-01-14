@@ -76,7 +76,7 @@ export async function latestPlaylist(limit: number): Promise<Playlist[]> {
  */
 export async function latestVideosMessage(limit: number = 10): Promise<string> {
   const videos = await latestVideos(limit);
-  if (videos.length == 0) {
+  if (videos.length === 0) {
     return "Maaf, terdapat sedikit kendala! Silahkan coba lagi nanti.";
   }
 
@@ -98,7 +98,7 @@ export async function latestVideosMessage(limit: number = 10): Promise<string> {
  */
 export async function playlistMessage(limit: number = 10): Promise<string> {
   const playlist = await latestPlaylist(limit);
-  if (playlist.length == 0) {
+  if (playlist.length === 0) {
     return "Maaf, terdapat sedikit kendala! Silahkan coba lagi nanti.";
   }
 
