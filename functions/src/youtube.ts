@@ -108,7 +108,7 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
               console.log(`Publishing video: ${video.title}`);
 
               await bot.sendMessage(
-                config.telegram.group_id,
+                config.telegram.admin_id,
                 `Halo koders, cekidot video terbaru ya → <b><a href="${video.link}">${video.title}</a></b>`,
                 { parse_mode: "HTML" }
               );
