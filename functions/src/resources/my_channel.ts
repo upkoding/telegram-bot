@@ -80,15 +80,13 @@ export async function latestVideosMessage(limit: number = 10): Promise<string> {
     return "Maaf, terdapat sedikit kendala! Silahkan coba lagi nanti.";
   }
 
-  let message =
-    "10 video terbaru di channel [UpKoding](https://www.youtube.com/c/UpKoding):\n\n";
+  let message = `10 video terbaru di channel <a href="https://www.youtube.com/c/UpKoding">UpKoding</a>:\n\n`;
 
   videos.forEach((v: Video) => {
-    message += `→ [${v.title}](${v.link})\n`;
+    message += `→ <a href="${v.link}">${v.title}</a>\n`;
   });
 
-  message +=
-    "\nUntuk lebih lengkapnya silahkan cek [disini](https://www.youtube.com/c/UpKoding/videos)";
+  message += `\nUntuk lebih lengkapnya silahkan cek <a href="https://www.youtube.com/c/UpKoding/videos">disini</a>.`;
   return message;
 }
 
@@ -102,14 +100,12 @@ export async function playlistMessage(limit: number = 10): Promise<string> {
     return "Maaf, terdapat sedikit kendala! Silahkan coba lagi nanti.";
   }
 
-  let message =
-    "Playlists di channel [UpKoding](https://www.youtube.com/c/UpKoding):\n\n";
+  let message = `Playlists di channel <a href="https://www.youtube.com/c/UpKoding">UpKoding</a>:\n\n`;
 
   playlist.forEach((v: Video) => {
-    message += `→ [${v.title}](${v.link})\n`;
+    message += `→ <a href="${v.link}">${v.title}</a>\n`;
   });
 
-  message +=
-    "\nUntuk lebih lengkapnya silahkan cek [disini](https://www.youtube.com/c/UpKoding/playlists)";
+  message += `\nUntuk lebih lengkapnya silahkan cek <a href="https://www.youtube.com/c/UpKoding/playlists">disini</a>.`;
   return message;
 }

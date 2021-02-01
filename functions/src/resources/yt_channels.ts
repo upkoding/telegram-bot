@@ -46,10 +46,9 @@ export const ytChannelsMessage = (): string => {
   let message = "Daftar channel Youtube belajar pemrograman:\n\n";
 
   channels.forEach((chan: Channel) => {
-    message += `→ [${chan.name}](${chan.url})\n`;
+    message += `→ <a href="${chan.url}">${chan.name}</a>\n`;
   });
 
-  message +=
-    "\nAda yang lain? bantu tambahkan [disini](https://github.com/upkoding/telegram-bot/blob/main/functions/src/resources/yt_channels.ts)";
+  message += `\nAda yang lain? bantu tambahkan <a href="https://github.com/upkoding/telegram-bot/blob/main/functions/src/resources/yt_channels.ts">disini</a>.`;
   return message;
 };

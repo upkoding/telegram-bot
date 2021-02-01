@@ -41,41 +41,39 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
     const text = `
 Halo kak ${msg.from?.first_name},
 
-Perkenalkan saya [UpKodingBot](https://github.com/upkoding/telegram-bot), lagi belajar pemrograman juga lho.
-Saat ini belum punya banyak skill tapi sudah bisa beberapa command berikut ini:
+Perkenalkan saya <a href="https://github.com/upkoding/telegram-bot">UpKodingBot</a>, berikut command yang tersedia:
 
 /channels - Daftar channel Youtube belajar programming
 /videos - Daftar video terbaru dari Bli Eka Putra
 /playlists - Daftar playlist yang ada di channel UpKoding
 /tentang - Tentang UpKodingBot
 
-Udah baru segitu hehe, mau bikin saya tambah pintar? kakak bisa ngajarin [disini](https://github.com/upkoding/telegram-bot)`;
+Mau bantu ngembangin? cek kodenya <a href="https://github.com/upkoding/telegram-bot">disini</a> ya.`;
     await bot.sendMessage(msg.chat.id, text, {
-      parse_mode: "Markdown",
+      parse_mode: "HTML",
       disable_web_page_preview: true,
     });
   });
 
   bot.onText(/\/tentang/, async (msg: TelegramBot.Message) => {
     const text = `
-Halo kak ${msg.from?.first_name}, penasaran sama saya ya? 😀
+Halo kak ${msg.from?.first_name}, berikut info tentang saya:
 
-Saya cuma kasi contoh apa yang seorang programmer bisa lakukan, seperti bli Eka yang menciptakan saya. Dengan keahlian programming kita bisa membuat Telegram bot, aplikasi, website pkoknya banyak kak.
+- Dibuat pakai <a href="https://nodejs.org">NodeJS</a>
+- Di-coding dengan <a href="https://www.typescriptlang.org">Typescript</a>
+- Saya jalan sebagai <a href="https://firebase.google.com/docs/functions">Firebase Functions</a>
+- Ingatan saya ada di <a href="https://firebase.google.com/docs/firestore">Firestore</a>
 
-Jadi tetap semangat ya, belajar programming memang tidak mudah tapi saya yakin kak ${msg.from?.first_name} pasti bisa asalkan tekun dan tidak pernah menyerah.
-
-O iya, saya dibuat pakai [NodeJS](https://nodejs.org) dan di-coding dengan [Typescript](https://www.typescriptlang.org) lho kak, trus saya jalan di [Firebase](https://firebase.google.com) dan ingatan saya ada di [Firestore](https://firebase.google.com/docs/firestore).
-
-Kakak juga bisa bantu ngajarin saya skill baru atau benerin kalau saya ada salah, [disini kak](https://github.com/upkoding/telegram-bot).`;
+Kakak mau bantu ngembangin? cek kodenya <a href="https://github.com/upkoding/telegram-bot">disini</a> ya.`;
     await bot.sendMessage(msg.chat.id, text, {
-      parse_mode: "Markdown",
+      parse_mode: "HTML",
       disable_web_page_preview: true,
     });
   });
 
   bot.onText(/\/channels/, async (msg: TelegramBot.Message) => {
     await bot.sendMessage(msg.chat.id, ytChannelsMessage(), {
-      parse_mode: "Markdown",
+      parse_mode: "HTML",
       disable_web_page_preview: true,
     });
   });
@@ -83,7 +81,7 @@ Kakak juga bisa bantu ngajarin saya skill baru atau benerin kalau saya ada salah
   bot.onText(/\/videos/, async (msg: TelegramBot.Message) => {
     const text = await latestVideosMessage();
     await bot.sendMessage(msg.chat.id, text, {
-      parse_mode: "Markdown",
+      parse_mode: "HTML",
       disable_web_page_preview: true,
     });
   });
@@ -91,7 +89,7 @@ Kakak juga bisa bantu ngajarin saya skill baru atau benerin kalau saya ada salah
   bot.onText(/\/playlists/, async (msg: TelegramBot.Message) => {
     const text = await playlistMessage();
     await bot.sendMessage(msg.chat.id, text, {
-      parse_mode: "Markdown",
+      parse_mode: "HTML",
       disable_web_page_preview: true,
     });
   });

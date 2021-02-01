@@ -4,12 +4,25 @@ import * as TelegramBot from "node-telegram-bot-api";
 import * as Parser from "rss-parser";
 import * as admin from "firebase-admin";
 
+interface FeedEntry {
+  id: string;
+  title: string;
+  link: string;
+  pubDate: string;
+  author?: string;
+  isoDate?: string;
+}
+
 // Youtube Feed parser
-const parser: Parser = new Parser({
-  customFields: {
-    item: ["yt:videoId", "yt:channelId", "published", "updated"],
-  },
-});
+const parser: Parser = new Parser();
+
+/**
+ * convert `yt:video:abc123` into `abc123`
+ * @param videoId <string>
+ */
+function parseVideoId(videoId: string): string {
+  return videoId.replace("yt:video:", "");
+}
 
 /**
  * Check to see if specified video ID already shared (exists in shared_videos/)
@@ -28,8 +41,8 @@ async function alreadyShared(videoId: string): Promise<boolean> {
  * Save video to Firestore
  * @param video <any>, video object from feed
  */
-async function saveVideo(video: any): Promise<boolean> {
-  const videoId = video["yt:videoId"];
+async function saveVideo(video: FeedEntry): Promise<boolean> {
+  const videoId = parseVideoId(video.id);
   return admin
     .firestore()
     .doc(`shared_videos/${videoId}`)
@@ -75,29 +88,37 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
     "/webhook/videos",
     verifyToken,
     async (req: express.Request, res: express.Response) => {
-      const feed = await parser.parseString(req.body);
+      try {
+        const feed = await parser.parseString(req.body);
+        // share the first video only
+        if (feed && feed.items.length > 0) {
+          const video = feed.items[0] as FeedEntry;
+          const videoId = parseVideoId(video.id);
 
-      // share the first video only
-      if (feed.items.length > 0) {
-        const video = feed.items[0];
-        const videoId = video["yt:videoId"];
+          // isNew: published less than or equal 60 minutes ago
+          const minuteSincePublished =
+            (Date.now() - Date.parse(video.pubDate)) / (1000 * 60);
+          const isNew = minuteSincePublished <= 60;
 
-        // isNew: published less than or equal 60 minutes ago
-        const minuteSincePublished = (Date.now() - Date.parse(video.pubDate!!)) / (1000 * 60)
-        const isNew = minuteSincePublished <= 60
+          // only share to group if its new AND never shared
+          if (isNew && !(await alreadyShared(videoId))) {
+            // save before sharing
+            const saved = await saveVideo(video);
+            if (saved) {
+              console.log(`Publishing video: ${video.title}`);
 
-        // only share to group if its new AND never shared
-        if (isNew && !(await alreadyShared(videoId))) {
-          // save before sharing
-          const saved = await saveVideo(video);
-          if (saved) {
-            await bot.sendMessage(
-              config.telegram.group_id,
-              `Halo koders, cekidot video terbaru ya → *${video.title}* (${video.link})`,
-              { parse_mode: "Markdown" }
-            );
+              await bot.sendMessage(
+                config.telegram.group_id,
+                `Halo koders, cekidot video terbaru ya → <b><a href="${video.link}">${video.title}</a></b>`,
+                { parse_mode: "HTML" }
+              );
+            }
           }
         }
+      } catch (err) {
+        console.log(err.message);
+        res.sendStatus(500);
+        return;
       }
       res.sendStatus(200);
     }
