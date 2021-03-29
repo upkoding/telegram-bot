@@ -13,6 +13,8 @@ interface FeedEntry {
   isoDate?: string;
 }
 
+admin.initializeApp();
+
 // Youtube Feed parser
 const parser: Parser = new Parser();
 
