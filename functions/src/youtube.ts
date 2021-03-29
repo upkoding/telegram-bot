@@ -98,7 +98,7 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
           // isNew: published less than or equal 60 minutes ago
           const minuteSincePublished =
             (Date.now() - Date.parse(video.pubDate)) / (1000 * 60);
-          const isNew = minuteSincePublished <= 60;
+          const isNew = minuteSincePublished >= 60;
           const shared = await alreadyShared(videoId);
           
           console.log(`Video published at: ${Date.parse(video.pubDate)}`)
