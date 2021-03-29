@@ -47,6 +47,7 @@ async function saveVideo(video: FeedEntry): Promise<boolean> {
     .firestore()
     .doc(`shared_videos/${videoId}`)
     .set(video)
+    .then(() => true);
 }
 
 /**
