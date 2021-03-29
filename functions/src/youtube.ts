@@ -98,7 +98,7 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
           // isNew: published less than or equal 60 minutes ago
           const minuteSincePublished =
             (Date.now() - Date.parse(video.pubDate)) / (1000 * 60);
-          const isNew = minuteSincePublished >= 60;
+          const isNew = minuteSincePublished <= 60;
           const shared = await alreadyShared(videoId);
           
           console.log(`minSincePublished=${minuteSincePublished}, shared=${shared}`);
@@ -111,7 +111,7 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
             
             console.log(`Publishing video...`);
             await bot.sendMessage(
-              config.telegram.admin_id,
+              config.telegram.group_id,
               `Halo koders, cekidot video terbaru ya → <b><a href="${video.link}">${video.title}</a></b>`,
               { parse_mode: "HTML" }
             );
