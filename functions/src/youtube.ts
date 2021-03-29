@@ -47,8 +47,6 @@ async function saveVideo(video: FeedEntry): Promise<boolean> {
     .firestore()
     .doc(`shared_videos/${videoId}`)
     .set(video)
-    .then(() => true)
-    .catch(() => false);
 }
 
 /**
@@ -94,6 +92,7 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
         if (feed && feed.items.length > 0) {
           const video = feed.items[0] as FeedEntry;
           const videoId = parseVideoId(video.id);
+          console.log(`Video: ${video.title}`);
 
           // isNew: published less than or equal 60 minutes ago
           const minuteSincePublished =
@@ -106,18 +105,15 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
           // only share to group if its new AND never shared
           if (isNew && !shared) {
             // save before sharing
-            const saved = await saveVideo(video);
-            console.log(`Saving video: ${video.title}, saved=${saved}`);
+            console.log(`Saving video...`);
+            await saveVideo(video);
             
-            if (saved) {
-              console.log(`Publishing video: ${video.title}`);
-
-              await bot.sendMessage(
-                config.telegram.admin_id,
-                `Halo koders, cekidot video terbaru ya → <b><a href="${video.link}">${video.title}</a></b>`,
-                { parse_mode: "HTML" }
-              );
-            }
+            console.log(`Publishing video...`);
+            await bot.sendMessage(
+              config.telegram.admin_id,
+              `Halo koders, cekidot video terbaru ya → <b><a href="${video.link}">${video.title}</a></b>`,
+              { parse_mode: "HTML" }
+            );
           }
         }
       } catch (err) {
