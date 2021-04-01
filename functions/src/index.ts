@@ -24,3 +24,23 @@ app.use("/youtube", youtube(bot, config));
 app.use("/telegram", telegram(bot, config));
 
 exports.UpKodingBot = functions.https.onRequest(app);
+
+exports.EnglishDayReminder = functions.pubsub
+  .schedule("0 9 * * FRI")
+  .timeZone("Asia/Jakarta")
+  .onRun(async (context: functions.EventContext) => {
+    const msg = `
+✨✨✨✨✨✨
+Pagi semuanya, <b>ingat ya hari ini adalah hari berbahasa Inggris</b>.
+
+<i>Jadi usahakan ketika bertanya, menjawab atau sharing kita menggunakan bahasa Inggris</i>.
+Tidak harus sempurna, yang penting berani karena kita sama-sama belajar disini.
+
+Have a nice day everyone!
+✨✨✨✨✨✨
+      `;
+    await bot.sendMessage(config.telegram.group_id, msg, {
+      parse_mode: "HTML",
+    });
+    return true;
+  });
