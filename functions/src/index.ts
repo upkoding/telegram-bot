@@ -26,7 +26,7 @@ app.use("/telegram", telegram(bot, config));
 exports.UpKodingBot = functions.https.onRequest(app);
 
 exports.EnglishDayReminder = functions.pubsub
-  .schedule("0 9 * * FRI")
+  .schedule("0 8 * * FRI")
   .timeZone("Asia/Jakarta")
   .onRun(async (context: functions.EventContext) => {
     const msg = `
