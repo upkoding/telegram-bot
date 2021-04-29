@@ -45,7 +45,7 @@ export const channels: Channel[] = [
     url: "https://www.youtube.com/channel/UChCPas5k2qjUe5ePyLm2FBQ"
   },
   {
-    name: "oon arfiandwi (django)",
+    name: "Oon Arfiandwi (django)",
     url: "https://www.youtube.com/channel/UCOGA5aJwf_9-E5cQ_Y95YaQ"
   },
 ];
