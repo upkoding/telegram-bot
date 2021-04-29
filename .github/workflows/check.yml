@@ -18,4 +18,4 @@ jobs:
       - name: Install Dependencies
         run: cd functions && npm install
       - name: Linter check
-        run: npm run lint
+        run: cd functions && npm run lint
