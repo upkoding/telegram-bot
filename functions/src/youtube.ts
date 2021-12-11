@@ -75,6 +75,8 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
   // we need to return `hub.challenge` in response and 200 response code
   router.get(
     "/webhook/videos",
+    // access local function to veryfi auth 
+    // -> look js closure ( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures#closure )
     verifyToken,
     (req: express.Request, res: express.Response) => {
       const query = req.query;
@@ -85,9 +87,12 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
   // https://pubsubhubbub.appspot.com callback endpoint
   router.post(
     "/webhook/videos",
+    // access local function to veryfi auth 
+    // -> look js closure ( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures#closure )
     verifyToken,
     async (req: express.Request, res: express.Response) => {
       try {
+        // parse data xml -> https://developers.google.com/youtube/v3/guides/push_notifications
         const feed = await parser.parseString(req.body);
         // share the first video only
         if (feed && feed.items.length > 0) {
@@ -117,7 +122,7 @@ export default function (bot: TelegramBot, config: functions.config.Config) {
             );
           }
         }
-      } catch (err) {
+      } catch (err: any) {
         console.log(err.message);
         res.sendStatus(500);
         return;
