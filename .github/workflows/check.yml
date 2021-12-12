@@ -19,3 +19,5 @@ jobs:
         run: cd functions && npm install
       - name: Linter check
         run: cd functions && npm run lint
+      - name: Testing check
+        run: cd functions && npm run test
