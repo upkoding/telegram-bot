@@ -102,7 +102,7 @@ Kakak mau bantu ngembangin? cek kodenya <a href="https://github.com/upkoding/tel
   router.post(
     `/webhook/${config.telegram.bot_token}`,
     (req: express.Request, res: express.Response) => {
-      bot.processUpdate(req.body);
+      bot.processUpdate(req.body); // receive incoming messages & emit bot
       res.sendStatus(200);
     }
   );

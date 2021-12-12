@@ -58,8 +58,8 @@ export const channels: Channel[] = [
   },
   {
     name: "Mega Bagus Herlambang (Data Science & AI)",
-    url: "https://www.youtube.com/c/MegaBagusHerlambang"
-  }
+    url: "https://www.youtube.com/c/MegaBagusHerlambang",
+  },
 ];
 
 export const ytChannelsMessage = (): string => {
