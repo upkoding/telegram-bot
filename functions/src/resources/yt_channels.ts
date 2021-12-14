@@ -48,6 +48,18 @@ export const channels: Channel[] = [
     name: "Oon Arfiandwi (Django)",
     url: "https://www.youtube.com/channel/UCOGA5aJwf_9-E5cQ_Y95YaQ",
   },
+  {
+    name: "Cloud Engineering with Imre",
+    url: "https://www.youtube.com/channel/UCC7eynhXsqH-7RdsBB1E53g",
+  },
+  {
+    name: "Aden Rahmandi (Wordpress)",
+    url: "https://www.youtube.com/c/AdenRahmandi",
+  },
+  {
+    name: "Mega Bagus Herlambang (Data Science & AI)",
+    url: "https://www.youtube.com/c/MegaBagusHerlambang",
+  },
 ];
 
 export const ytChannelsMessage = (): string => {

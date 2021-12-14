@@ -18,6 +18,7 @@ const bot = new TelegramBot(config.telegram.bot_token);
 
 const app = express();
 app.use(express.json());
+app.use(express.raw({ type: 'application/xml'})); // for rss-parser
 
 // routes
 app.use("/youtube", youtube(bot, config));
